@@ -8,19 +8,19 @@ public class StudentController : ControllerBase
 
     IStudentRepository studentRepository;
 
-    ILoggable loggable;
+    ILogbook logbook;
 
-    public StudentController(IStudentRepository student, ILoggable loggable)
+    public StudentController(IStudentRepository student, ILogbook log)
     {
         studentRepository = student;
-        loggable = loggable;
+        logbook = log;
     }
 
     [HttpGet]
 
     public IEnumerable<Student> Get()
     {
-        loggable.Add($"returning student's list");
+        logbook.Add($"returning student's list");
         return studentRepository.GetAll();
     }
 
@@ -28,6 +28,6 @@ public class StudentController : ControllerBase
     public void Add([FromBody]Student student)
     {
         studentRepository.Add(student);
-        loggable.Add($"The Student {student.Fullname} have been added");
+        logbook.Add($"The Student {student.Fullname} have been added");
     }
 }
